@@ -1,16 +1,13 @@
 #version 330 core
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec3 aColor;
-layout (location = 2) in vec2 aTexCoord;
-  
-out vec3 ourColor;
-out vec2 TexCoord;
 
-uniform float offsetX = 0.0, offsetY = 0.0;
+out vec4 vertexColor;
+
+uniform mat4 model, view, projection;
 
 void main()
 {
-    gl_Position = vec4(aPos.x + offsetX, aPos.y + offsetY, aPos.z, 1.0);
-    ourColor = aColor;
-    TexCoord = aTexCoord;
-}  
+    gl_Position = projection * view * model * vec4(aPos, 1.0f);
+    vertexColor = vec4(aColor, 1.0f);
+}
